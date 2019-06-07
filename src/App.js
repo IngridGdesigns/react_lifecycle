@@ -7,6 +7,7 @@ class App extends React.Component {
 
       this.state = {
          data: 0,
+         
       }
 
    };
@@ -19,14 +20,19 @@ class App extends React.Component {
       return (
          <div>
             <button onClick = {this.setNewNumber}>INCREMENT</button>
-            <Content myNumber = {this.state.data}></Content>
+            <Content myNumber ={this.state.data}></Content>
          </div>
       );
    }
 }
 
 class Content extends React.Component {
-
+  constructor(props){
+    super(props)
+    this.state = {
+      films: '',
+    }
+  }
   //Is invoked immediatley before mounting occurs, It is called
   //before render() therefore setting state in this method will
   //not trigger a re-render Do not may async calls here for initialization!!!!
@@ -37,6 +43,7 @@ class Content extends React.Component {
 
    //Make async calls for component initialization in componentDidMount
    componentDidMount() {
+    
     const headers ={
       method: 'GET',
       body: JSON.stringify(),
@@ -47,17 +54,28 @@ class Content extends React.Component {
     console.log('Component Did Mount!!!! :D')
      fetch(`https://ghibliapi.herokuapp.com/films`, headers)
      .then(res => res.json())
-     .then(res => console.log(res))
+     .then(films => this.setState({ films }, console.log(films)))
    }
 
+   componentWillReceiveProps(newProps){
+     console.log('Component Will receive props')
+   }
+
+   shouldComponentUpdate(newProps, nextState) {
+     return true
+   }
+
+   componentWillUpdate(nextProps, nextState){
+     console.log('Component Did UPDATE, press button to see')
+   }
 
   
    render() {
-   
+  
       return (
          <div>
             <h3>{this.props.myNumber}</h3>
-            
+           
          </div>
       );
    }
