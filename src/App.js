@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css'
 
 class App extends React.Component {
 
@@ -18,9 +19,12 @@ class App extends React.Component {
 
    render() {
       return (
-         <div>
+         <div className='App'>
+          
+           <Content myNumber ={this.state.data}></Content>
+           <p>(watch how the lifecylce 'reacts', in console)</p>
             <button onClick = {this.setNewNumber}>INCREMENT</button>
-            <Content myNumber ={this.state.data}></Content>
+            
          </div>
       );
    }
@@ -58,7 +62,7 @@ class Content extends React.Component {
    }
 
    componentWillReceiveProps(newProps){
-     console.log('Component Will receive props')
+     console.log('Component Will receive the PROPS')
    }
 
    shouldComponentUpdate(newProps, nextState) {
@@ -66,14 +70,18 @@ class Content extends React.Component {
    }
 
    componentWillUpdate(nextProps, nextState){
-     console.log('Component Did UPDATE, press button to see')
+     console.log('Component WILL UPDATE, press button to see')
    }
 
+   componentDidUpdate(prevProps, prevState) {
+     console.log('Component DID UPDATE ... :)')
+   }
   
    render() {
   
       return (
          <div>
+           <h1>Press button to increment</h1>
             <h3>{this.props.myNumber}</h3>
            
          </div>
